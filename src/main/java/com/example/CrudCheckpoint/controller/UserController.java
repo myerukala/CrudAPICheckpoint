@@ -25,9 +25,25 @@ public class UserController {
         return this.repository.save(user);
     }
 
-    @GetMapping("user/id/{id}")
+    @GetMapping("users/{id}")
     public Optional<User> read(@PathVariable Long id) {
         return this.repository.findById(id);
     }
 
+
+    @PatchMapping("users/{id}")
+    public void patchUpdate(@RequestBody User userInput,@PathVariable Long id) {
+        User user = this.repository.findById(id).get();
+        user.setEmail(userInput.getEmail());
+        user.setPassword(userInput.getPassword());
+        this.repository.save(user);
+    }
+
+    @DeleteMapping("users/{id}")
+    public void delete(@RequestBody User userInput,@PathVariable Long id) {
+       User user = this.repository.findById(id).get();
+       user.setEmail(userInput.getEmail());
+       user.setPassword(userInput.getPassword());
+       this.repository.delete(user);
+    }
 }
