@@ -1,6 +1,8 @@
 package com.example.CrudCheckpoint.controller;
 
+import com.example.CrudCheckpoint.domain.Result;
 import com.example.CrudCheckpoint.domain.User;
+import com.example.CrudCheckpoint.domain.UserAuthentication;
 import com.example.CrudCheckpoint.repository.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,10 +42,30 @@ public class UserController {
     }
 
     @DeleteMapping("users/{id}")
-    public void delete(@RequestBody User userInput,@PathVariable Long id) {
+    public Result delete(@RequestBody User userInput,@PathVariable Long id) {
        User user = this.repository.findById(id).get();
        user.setEmail(userInput.getEmail());
        user.setPassword(userInput.getPassword());
        this.repository.delete(user);
+
+       Result response = new Result();
+       response.count = this.repository.count();
+       return response;
     }
+
+
+    @PostMapping("users/authenticate")
+    public UserAuthentication authenticate(@RequestBody User userInput) {
+        User user = this.repository.findByEmail(userInput.getEmail());
+        UserAuthentication response = new UserAuthentication();
+        if (userInput.getPassword().equals(user.getPassword())) {
+            response.setAuthenticated(true);
+            response.setUser(user);
+            return response;
+        }else {
+            response.setAuthenticated(false);
+            return response;
+        }
+    }
+
 }
