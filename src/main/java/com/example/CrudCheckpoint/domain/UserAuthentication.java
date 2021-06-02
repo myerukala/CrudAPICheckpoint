@@ -1,5 +1,8 @@
 package com.example.CrudCheckpoint.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserAuthentication {
 
         private boolean authenticated;

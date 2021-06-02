@@ -34,11 +34,11 @@ public class UserController {
 
 
     @PatchMapping("users/{id}")
-    public void patchUpdate(@RequestBody User userInput,@PathVariable Long id) {
+    public User patchUpdate(@RequestBody User userInput, @PathVariable Long id) {
         User user = this.repository.findById(id).get();
         user.setEmail(userInput.getEmail());
         user.setPassword(userInput.getPassword());
-        this.repository.save(user);
+        return this.repository.save(user);
     }
 
     @DeleteMapping("users/{id}")
