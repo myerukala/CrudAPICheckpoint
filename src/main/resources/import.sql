@@ -1,3 +1,3 @@
-insert  into user(id, email, password) values (3, 'sony@example.com', 'sonypwd');
-insert  into user(id, email, password) values (4, 'jonny@example.com', 'jonnypwd');
+insert  into user(id, email, password) values (1, 'sony@example.com', 'sonypwd');
+insert  into user(id, email, password) values (2, 'jonny@example.com', 'jonnypwd');
 select * from user;
